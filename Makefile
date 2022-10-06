@@ -1,4 +1,4 @@
-.PHONY: venv pre-commit fmt lint
+.PHONY: venv pre-commit fmt lint run
 
 venv:
 	pipenv install
@@ -13,3 +13,6 @@ fmt:
 
 lint:
 	pylint ./teletwitterbot --disable=C0114,C0115,C0116
+
+run:
+	python -m teletwitterbot
