@@ -43,3 +43,4 @@ async def showrecent(update: Update, context: ContextTypes.DEFAULT_TYPE):
     for tweet in tweets_list:
         await context.bot.send_message(chat_id=update.effective_chat.id,
                                        text=f"{tweet}")
+    bot_list.last_check = datetime.datetime.now()
