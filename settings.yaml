@@ -1,0 +1,6 @@
+default:
+  db_path: sqlite:///database.db
+  proxy_url: socks5://127.0.0.1:1090
+production:
+  db_path: sqlite:///database.db
+  proxy_url: ''

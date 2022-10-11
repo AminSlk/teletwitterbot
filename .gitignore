@@ -167,3 +167,5 @@ cython_debug/
 
 database.db
 outputs
+# Ignore dynaconf secret files
+.secrets.*

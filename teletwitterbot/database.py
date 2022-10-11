@@ -2,10 +2,10 @@ from sqlalchemy import (Column, DateTime, ForeignKey, Integer, String,
                         create_engine)
 from sqlalchemy.orm import declarative_base, relationship, sessionmaker
 
-from teletwitterbot.config import Config
+from teletwitterbot.config import settings
 
 Base = declarative_base()
-engine = create_engine(Config["db_path"], echo=True)
+engine = create_engine(settings["db_path"], echo=True)
 
 
 class List(Base):  # pylint: disable=too-few-public-methods

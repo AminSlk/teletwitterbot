@@ -8,6 +8,7 @@ python-telegram-bot = {version = "==20.0a4", extras = ["socks"]}
 scweet = "*"
 sqlalchemy = "*"
 selenium = "==4.2.0"
+dynaconf = "*"
 
 [dev-packages]
 yapf = "*"

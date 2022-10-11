@@ -3,7 +3,7 @@ import logging
 
 from Scweet.scweet import scrape
 
-from teletwitterbot.config import Config
+from teletwitterbot.config import settings
 from teletwitterbot.database import List
 
 logger = logging.getLogger(__name__)
@@ -27,5 +27,5 @@ def get_user_tweets(username, from_date: datetime.datetime):
                     from_account=username,
                     headless=True,
                     filter_replies=True,
-                    proxy=Config["proxy_url"])
+                    proxy=settings["proxy_url"])
     return tweets

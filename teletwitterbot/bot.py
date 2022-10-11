@@ -1,14 +1,14 @@
 from telegram.ext import ApplicationBuilder, CommandHandler
 
 from teletwitterbot import commands
-from teletwitterbot.config import Config
+from teletwitterbot.config import settings
 
 
 def main():
-    builder = ApplicationBuilder().token(Config["BOT_TOKEN"])
-    if Config["proxy_url"]:
-        builder.proxy_url(Config["proxy_url"])
-        builder.get_updates_proxy_url(Config["proxy_url"])
+    builder = ApplicationBuilder().token(settings["BOT_TOKEN"])
+    if settings["proxy_url"]:
+        builder.proxy_url(settings["proxy_url"])
+        builder.get_updates_proxy_url(settings["proxy_url"])
     application = builder.build()
 
     start_handler = CommandHandler('start', commands.start)
