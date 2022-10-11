@@ -13,7 +13,7 @@ def scrape_list(bot_list: List):
     tweets_df = None
     for member in bot_list.members:
         member_tweets = get_user_tweets(member.username, bot_list.last_check)
-        if not tweets_df:
+        if tweets_df is None:
             tweets_df = member_tweets
         else:
             tweets_df = tweets_df.append(member_tweets, ignore_index=True)
