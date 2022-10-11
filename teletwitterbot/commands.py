@@ -33,7 +33,7 @@ async def addtolist(update: Update, context: ContextTypes.DEFAULT_TYPE):
     session.commit()
     await context.bot.send_message(
         chat_id=update.effective_chat.id,
-        text=f"Member {member.username} added to list {member.bot_list.name}")
+        text=f"Member {member.username} added to list {member.list.name}")
 
 
 async def showrecent(update: Update, context: ContextTypes.DEFAULT_TYPE):
