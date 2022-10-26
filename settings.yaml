@@ -4,6 +4,6 @@ default:
 production:
   db_path: sqlite:///database.db
   proxy_url: ''
-  private_key_path: /etc/teletwitterbot/cert/privkey.pem
-  cert_path: /etc/teletwitterbot/cert/cert.pem
+  private_key_path: /etc/letsencrypt/live/aminsalar.me/privkey.pem
+  cert_path: /etc/letsencrypt/live/aminsalar.me/fullchain.pem
   domain: aminsalar.me
