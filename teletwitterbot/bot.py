@@ -4,7 +4,7 @@ from teletwitterbot import commands
 from teletwitterbot.config import environment, settings
 
 
-def main():
+async def main():
     builder = ApplicationBuilder().token(settings["BOT_TOKEN"])
     if settings["proxy_url"]:
         builder.proxy_url(settings["proxy_url"])
@@ -24,8 +24,8 @@ def main():
 
     if environment == "production":
         webhook_url = f'https://{settings["domain"]}:8443/{settings["BOT_TOKEN"]}'
-        application.bot.setWebhook(webhook_url,
-                                   certificate=settings["cert_path"])
+        await application.bot.setWebhook(webhook_url,
+                                         certificate=settings["cert_path"])
         application.run_webhook(listen="0.0.0.0",
                                 port=8443,
                                 url_path=settings["BOT_TOKEN"],
@@ -33,5 +33,5 @@ def main():
                                 cert=settings["cert_path"],
                                 webhook_url=webhook_url)
     else:
-        application.bot.deleteWebhook()
+        await application.bot.deleteWebhook()
         application.run_polling()
