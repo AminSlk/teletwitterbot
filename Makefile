@@ -1,4 +1,4 @@
-.PHONY: venv pre-commit fmt lint run
+.PHONY: venv pre-commit fmt lint run clean
 
 venv:
 	pipenv install
@@ -16,3 +16,6 @@ lint:
 
 run:
 	python -m teletwitterbot
+
+clean:
+	rm -f database.db

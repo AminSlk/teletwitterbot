@@ -17,8 +17,17 @@ def scrape_list(bot_list: List):
             tweets_df = member_tweets
         else:
             tweets_df = tweets_df.append(member_tweets, ignore_index=True)
-    tweets_links = list(tweets_df.sort_values('Timestamp')['Tweet URL'])
-    return tweets_links
+    tweets = tweets_df.sort_values('Timestamp')
+    return create_message_from_tweets(tweets)
+
+
+def create_message_from_tweets(tweets):
+    messages = []
+    for _, tweet in tweets.iterrows():
+        message = f"{tweet['Embedded_text']} \n\n [Tweet Link]({tweet['Tweet URL']})"
+        message = message.replace('.', r'\.')
+        messages.append(message)
+    return messages
 
 
 def get_user_tweets(username, from_date: datetime.datetime):
