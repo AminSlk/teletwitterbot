@@ -1,7 +1,7 @@
 from telegram.ext import ApplicationBuilder, CommandHandler
 
 from teletwitterbot import commands
-from teletwitterbot.config import settings
+from teletwitterbot.config import environment, settings
 
 
 def main():
@@ -23,4 +23,13 @@ def main():
     showrecent_handler = CommandHandler('showrecent', commands.showrecent)
     application.add_handler(showrecent_handler)
 
+    if environment == "production":
+        application.run_webhook(
+            listen="0.0.0.0",
+            port=8443,
+            url_path=settings["BOT_TOKEN"],
+            key=settings["private_key_path"],
+            cert=settings["cert_path"],
+            webhook_url=
+            f'https://{settings["domain"]}:8443/{settings["BOT_TOKEN"]}')
     application.run_polling()
