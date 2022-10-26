@@ -29,6 +29,7 @@ def create_message_from_tweets(tweets):
                     [Tweet Link]({tweet['Tweet URL']})"""
         message = message.replace('.', r'\.')
         message = message.replace('-', r'\-')
+        message = message.replace('#', r'\#')
         messages.append(message)
     return messages
 
