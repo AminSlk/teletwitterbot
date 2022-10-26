@@ -40,6 +40,20 @@ def replace_reserved_characters(message):
     message = message.replace('&', r'\&')
     message = message.replace('@', r'\@')
     message = message.replace('*', r'\*')
+    message = message.replace('!', r'\!')
+    message = message.replace('[', r'\[')
+    message = message.replace(']', r'\]')
+    message = message.replace('(', r'\(')
+    message = message.replace(')', r'\)')
+    message = message.replace('~', r'\~')
+    message = message.replace('`', r'\`')
+    message = message.replace('>', r'\>')
+    message = message.replace('+', r'\+')
+    message = message.replace('-', r'\-')
+    message = message.replace('=', r'\=')
+    message = message.replace('|', r'\|')
+    message = message.replace('{', r'\{')
+    message = message.replace('}', r'\}')
     return message
 
 
