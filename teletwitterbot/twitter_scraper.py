@@ -27,11 +27,20 @@ def create_message_from_tweets(tweets):
         message = f"""From {tweet['UserName']}: \n\n
                     {tweet['Embedded_text']} \n\n
                     [Tweet Link]({tweet['Tweet URL']})"""
-        message = message.replace('.', r'\.')
-        message = message.replace('-', r'\-')
-        message = message.replace('#', r'\#')
+        message = replace_reserved_characters(message)
         messages.append(message)
     return messages
+
+
+def replace_reserved_characters(message):
+    message = message.replace('.', r'\.')
+    message = message.replace('-', r'\-')
+    message = message.replace('#', r'\#')
+    message = message.replace('_', r'\_')
+    message = message.replace('&', r'\&')
+    message = message.replace('@', r'\@')
+    message = message.replace('*', r'\*')
+    return message
 
 
 def get_user_tweets(username, from_date: datetime.datetime):
