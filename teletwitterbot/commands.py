@@ -1,11 +1,15 @@
 import datetime
+import logging
 
 from telegram import Update
 from telegram.constants import ParseMode
+from telegram.error import BadRequest
 from telegram.ext import ContextTypes
 
 from teletwitterbot.database import List, Member, session
 from teletwitterbot.twitter_scraper import scrape_list
+
+logger = logging.getLogger(__name__)
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -42,7 +46,11 @@ async def showrecent(update: Update, context: ContextTypes.DEFAULT_TYPE):
         name=context.args[0], username=update.effective_user.username).one()
     tweets = scrape_list(bot_list)
     for tweet in tweets:
-        await context.bot.send_message(chat_id=update.effective_chat.id,
-                                       text=tweet,
-                                       parse_mode=ParseMode.MARKDOWN_V2)
+        try:
+            await context.bot.send_message(chat_id=update.effective_chat.id,
+                                           text=tweet,
+                                           parse_mode=ParseMode.MARKDOWN_V2)
+        except BadRequest:
+            logger.exception("Exception on sending message %s", tweet)
+
     bot_list.last_check = datetime.datetime.now()
