@@ -24,10 +24,10 @@ def scrape_list(bot_list: List):
 def create_message_from_tweets(tweets):
     messages = []
     for _, tweet in tweets.iterrows():
-        message = f"""From {tweet['UserName']}: \n\n
-                    {tweet['Embedded_text']} \n\n
-                    [Tweet Link]({tweet['Tweet URL']})"""
-        message = replace_reserved_characters(message)
+        user_name = replace_reserved_characters(tweet['UserName'])
+        tweet_url = replace_reserved_characters(tweet['Tweet URL'])
+        tweet_text = replace_reserved_characters(tweet['Embedded_text'])
+        message = f"From {user_name}: \n\n {tweet_text} \n\n [Tweet Link]({tweet_url})"
         messages.append(message)
     return messages
 
