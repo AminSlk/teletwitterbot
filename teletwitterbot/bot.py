@@ -26,9 +26,10 @@ def main():
     if environment == "production":
         application.run_webhook(
             listen="127.0.0.1",
-            port=settings['port'],
+            port=settings["local_port"],
             url_path=settings["BOT_TOKEN"],
-            webhook_url=f'https://{settings["domain"]}/{settings["BOT_TOKEN"]}'
+            webhook_url=
+            f'https://{settings["domain"]}:{settings["webhook_port"]}/{settings["BOT_TOKEN"]}'
         )
     else:
         application.run_polling()
