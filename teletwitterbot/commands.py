@@ -56,4 +56,4 @@ async def showrecent(update: Update, context: ContextTypes.DEFAULT_TYPE):
         except BadRequest:
             logger.exception("Exception on sending message %s", tweet)
 
-    bot_list.last_check = datetime.datetime.now()
+    bot_list.last_check = datetime.datetime.now() + datetime.timedelta(days=1)
