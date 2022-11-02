@@ -58,7 +58,9 @@ def replace_reserved_characters(message):
 
 
 def get_user_tweets(username, from_date: datetime.datetime):
+    until_date = datetime.datetime.now() + datetime.timedelta(days=1)
     tweets = scrape(since=from_date.strftime("%Y-%m-%d"),
+                    until=until_date.strftime("%Y-%m-%d"),
                     interval=1,
                     from_account=username,
                     headless=True,
