@@ -45,6 +45,9 @@ async def showrecent(update: Update, context: ContextTypes.DEFAULT_TYPE):
     bot_list = session.query(List).filter_by(
         name=context.args[0], username=update.effective_user.username).one()
     tweets = scrape_list(bot_list)
+    if len(tweets) == 0:
+        await context.bot.send_message(chat_id=update.effective_chat.id,
+                                       text="No new tweets!")
     for tweet in tweets:
         try:
             await context.bot.send_message(chat_id=update.effective_chat.id,
