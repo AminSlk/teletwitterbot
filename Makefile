@@ -1,4 +1,5 @@
-.PHONY: venv pre-commit fmt lint run clean
+.PHONY: venv pre-commit fmt lint run clean docke-build
+DOCKER_IMAGE ?= teletwitterbot 
 
 venv:
 	pipenv install
@@ -19,3 +20,6 @@ run:
 
 clean:
 	rm -f database.db
+
+docker-build: clean 
+	docker build -t ${DOCKER_IMAGE} . 
