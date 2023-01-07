@@ -1,4 +1,4 @@
-.PHONY: venv pre-commit fmt lint run clean docke-build
+.PHONY: venv pre-commit fmt lint run clean docker-build
 DOCKER_IMAGE ?= teletwitterbot 
 
 venv:
