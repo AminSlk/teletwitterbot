@@ -25,6 +25,10 @@ async def get_list_name(update: Update, context: ContextTypes.DEFAULT_TYPE):
     list_name = update.message.text
     bot_list = session.query(List).filter_by(
         name=list_name, username=update.effective_user.username).one()
+    await context.bot.send_message(
+        chat_id=update.effective_chat.id,
+        text="Scraping tweets, It might take several minutes..."
+    )
     tweets = scrape_list(bot_list)
     if len(tweets) == 0:
         await context.bot.send_message(chat_id=update.effective_chat.id,
