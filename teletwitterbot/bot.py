@@ -2,6 +2,7 @@ from telegram.ext import ApplicationBuilder, CommandHandler
 
 from teletwitterbot import commands
 from teletwitterbot.config import environment, settings
+from teletwitterbot.processes import addmember, create_list
 
 
 def main():
@@ -14,11 +15,11 @@ def main():
     start_handler = CommandHandler('start', commands.start)
     application.add_handler(start_handler)
 
-    createlist_handler = CommandHandler('createlist', commands.createlist)
+    createlist_handler = create_list.get_handler()
     application.add_handler(createlist_handler)
 
-    addtolist_handler = CommandHandler('addtolist', commands.addtolist)
-    application.add_handler(addtolist_handler)
+    addmember_handler = addmember.get_handler()
+    application.add_handler(addmember_handler)
 
     showrecent_handler = CommandHandler('showrecent', commands.showrecent)
     application.add_handler(showrecent_handler)

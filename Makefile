@@ -13,7 +13,7 @@ fmt:
 	autoflake --in-place --remove-unused-variables --remove-all-unused-imports -r .
 
 lint:
-	pylint ./teletwitterbot --disable=C0114,C0115,C0116
+	pylint ./teletwitterbot --disable=C0114,C0115,C0116,R0801
 
 run:
 	python -m teletwitterbot
