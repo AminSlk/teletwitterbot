@@ -1,8 +1,8 @@
 from telegram.ext import ApplicationBuilder, CommandHandler
 
-from teletwitterbot import commands
 from teletwitterbot.config import environment, settings
-from teletwitterbot.processes import addmember, create_list
+from teletwitterbot.processes import (add_member, commons, create_list,
+                                      show_recent)
 
 
 def main():
@@ -12,17 +12,7 @@ def main():
         builder.get_updates_proxy_url(settings["proxy_url"])
     application = builder.build()
 
-    start_handler = CommandHandler('start', commands.start)
-    application.add_handler(start_handler)
-
-    createlist_handler = create_list.get_handler()
-    application.add_handler(createlist_handler)
-
-    addmember_handler = addmember.get_handler()
-    application.add_handler(addmember_handler)
-
-    showrecent_handler = CommandHandler('showrecent', commands.showrecent)
-    application.add_handler(showrecent_handler)
+    add_handlers(application)
 
     if environment == "production":
         application.run_webhook(
@@ -34,3 +24,12 @@ def main():
         )
     else:
         application.run_polling()
+
+
+def add_handlers(application):
+    start_handler = CommandHandler('start', commons.start)
+    application.add_handler(start_handler)
+
+    application.add_handler(create_list.get_handler())
+    application.add_handler(add_member.get_handler())
+    application.add_handler(show_recent.get_handler())

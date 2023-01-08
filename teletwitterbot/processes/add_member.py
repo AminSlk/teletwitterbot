@@ -4,6 +4,7 @@ from telegram.ext import (CommandHandler, ContextTypes, ConversationHandler,
                           MessageHandler, filters)
 
 from teletwitterbot.database import List, Member, session
+from teletwitterbot.processes.commons import cancel
 
 GETLISTNAME, GETMEMBERUSERNAME = range(2)
 
@@ -13,7 +14,7 @@ async def addmember(update: Update, context: ContextTypes.DEFAULT_TYPE):
         text="Please send the list name to add member to!")
     return GETLISTNAME
 
-async def getlistname(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def get_list_name(update: Update, context: ContextTypes.DEFAULT_TYPE):
     list_name = update.message.text
     context.user_data['list'] = list_name
     await context.bot.send_message(
@@ -34,19 +35,12 @@ async def get_member_username(update: Update, context: ContextTypes.DEFAULT_TYPE
         text=f"Member {member.username} added to list {member.list.name}")
     return ConversationHandler.END
 
-async def cancel(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await context.bot.send_message(
-        chat_id=update.effective_chat.id,
-        text="Canceled!"
-    )
-    return ConversationHandler.END
-
 
 def get_handler():
     handler = ConversationHandler(
         entry_points=[CommandHandler('addmember', addmember)],
         states={
-            GETLISTNAME: [MessageHandler(filters.ALL, getlistname)],
+            GETLISTNAME: [MessageHandler(filters.ALL, get_list_name)],
             GETMEMBERUSERNAME: [MessageHandler(filters.ALL, get_member_username)]
         },
         fallbacks=[CommandHandler('cancel', cancel)]
