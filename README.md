@@ -5,4 +5,4 @@ It mainly uses [Scweet](https://github.com/Altimis/Scweet) to scrape tweets from
 
 ## Example
 
-x
+![example](docs/example.jpg)
