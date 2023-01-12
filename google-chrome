@@ -1,3 +1,4 @@
 #!/bin/bash
+# To use this project in docker container the Binary of google-chrome should be move to /usr/bin/google-chrome-prev and this script should be moved to /usr/bin/google-chrome
 
 /usr/bin/google-chrome-prev --disable-dev-shm-usage --no-sandbox "$@"
