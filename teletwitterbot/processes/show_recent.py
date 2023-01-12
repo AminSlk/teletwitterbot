@@ -8,7 +8,8 @@ from telegram.ext import (CommandHandler, ContextTypes, ConversationHandler,
                           MessageHandler, filters)
 
 from teletwitterbot.database import List, session
-from teletwitterbot.processes.commons import cancel
+from teletwitterbot.processes.commons import (cancel, name_filter,
+                                              send_bad_name_message)
 from teletwitterbot.twitter_scraper import scrape_list
 
 logger = logging.getLogger(__name__)
@@ -44,12 +45,16 @@ async def get_list_name(update: Update, context: ContextTypes.DEFAULT_TYPE):
     bot_list.last_check = datetime.datetime.now() + datetime.timedelta(days=1)
     return ConversationHandler.END
 
+async def bad_list_name(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await send_bad_name_message(update, context)
+    return GETLISTNAME
 
 def get_handler():
     handler = ConversationHandler(
         entry_points=[CommandHandler('showrecent', showrecent)],
         states={
-            GETLISTNAME: [MessageHandler(filters.ALL, get_list_name)]
+            GETLISTNAME: [MessageHandler(name_filter, get_list_name),
+            MessageHandler(filters.ALL, send_bad_name_message)]
         },
         fallbacks=[CommandHandler('cancel', cancel)]
     )

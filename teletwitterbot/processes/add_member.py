@@ -4,7 +4,8 @@ from telegram.ext import (CommandHandler, ContextTypes, ConversationHandler,
                           MessageHandler, filters)
 
 from teletwitterbot.database import List, Member, session
-from teletwitterbot.processes.commons import cancel
+from teletwitterbot.processes.commons import (cancel, name_filter,
+                                              send_bad_name_message)
 
 GETLISTNAME, GETMEMBERUSERNAME = range(2)
 
@@ -35,13 +36,22 @@ async def get_member_username(update: Update, context: ContextTypes.DEFAULT_TYPE
         text=f"Member {member.username} added to list {member.list.name}")
     return ConversationHandler.END
 
+async def bad_list_name(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await send_bad_name_message(update, context)
+    return GETLISTNAME
+
+async def bad_member_name(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await send_bad_name_message(update, context)
+    return GETMEMBERUSERNAME
 
 def get_handler():
     handler = ConversationHandler(
         entry_points=[CommandHandler('addmember', addmember)],
         states={
-            GETLISTNAME: [MessageHandler(filters.ALL, get_list_name)],
-            GETMEMBERUSERNAME: [MessageHandler(filters.ALL, get_member_username)]
+            GETLISTNAME: [MessageHandler(name_filter, get_list_name),
+            MessageHandler(filters.ALL, bad_list_name)],
+            GETMEMBERUSERNAME: [MessageHandler(name_filter, get_member_username),
+            MessageHandler(filters.ALL, bad_member_name)]
         },
         fallbacks=[CommandHandler('cancel', cancel)]
     )
